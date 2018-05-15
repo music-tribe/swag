@@ -29,6 +29,13 @@ func inspect(t reflect.Type, jsonTag string) Property {
 		return p
 	}
 
+	if t.String() == "uuid.UUID" {
+		p.GoType = reflect.TypeOf("string")
+		p.Type = "string"
+		p.Format = "uuid"
+		return p
+	}
+
 	switch p.GoType.Kind() {
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Uint8, reflect.Uint16, reflect.Uint32:
 		p.Type = "integer"
