@@ -18,10 +18,10 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/frednomoon/swag"
+	"github.com/frednomoon/swag/endpoint"
+	"github.com/frednomoon/swag/swagger"
 	"github.com/gin-gonic/gin"
-	"github.com/savaki/swag"
-	"github.com/savaki/swag/endpoint"
-	"github.com/savaki/swag/swagger"
 )
 
 func handle(c *gin.Context) {

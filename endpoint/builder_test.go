@@ -21,9 +21,9 @@ import (
 
 	"reflect"
 
-	"github.com/savaki/swag"
-	"github.com/savaki/swag/endpoint"
-	"github.com/savaki/swag/swagger"
+	"github.com/frednomoon/swag"
+	"github.com/frednomoon/swag/endpoint"
+	"github.com/frednomoon/swag/swagger"
 	"github.com/stretchr/testify/assert"
 )
 
