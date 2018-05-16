@@ -1,7 +1,10 @@
+
+
 # swag
 
+Forked from & all credit to [Savaki](https://github.com/savaki)
+
 [![GoDoc](https://godoc.org/github.com/frednomoon/swag?status.svg)](https://godoc.org/github.com/frednomoon/swag)
-[![Build Status](https://travis-ci.org/frednomoon/swag.svg?branch=master)](https://travis-ci.org/frednomoon/swag)
 
 ```swag``` is a lightweight library to generate swagger json for Go projects.  
  
