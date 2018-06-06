@@ -17,6 +17,7 @@ package swagger
 import (
 	"reflect"
 	"strings"
+	"time"
 )
 
 func inspect(t reflect.Type, jsonTag string) Property {
@@ -33,6 +34,27 @@ func inspect(t reflect.Type, jsonTag string) Property {
 		p.GoType = reflect.TypeOf("string")
 		p.Type = "string"
 		p.Format = "uuid"
+		return p
+	}
+
+	if t.String() == "*bool" {
+		p.GoType = reflect.TypeOf("bool")
+		p.Type = "boolean"
+		return p
+	}
+
+	if t.String() == "time.Time" {
+		p.GoType = reflect.TypeOf("string")
+		p.Example = time.Now().UTC().Format(time.RFC3339)
+		p.Type = "string"
+		p.Format = "date"
+		return p
+	}
+
+	if t.String() == "json.RawMessage" {
+		p.GoType = reflect.TypeOf("struct")
+		p.Type = "object"
+		p.Format = "json"
 		return p
 	}
 
