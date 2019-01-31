@@ -4,7 +4,7 @@
 
 Forked from & all credit to [Savaki](https://github.com/savaki)
 
-[![GoDoc](https://godoc.org/github.com/frednomoon/swag?status.svg)](https://godoc.org/github.com/frednomoon/swag)
+[![GoDoc](https://godoc.org/github.com/music-tribe/swag?status.svg)](https://godoc.org/github.com/music-tribe/swag)
 
 ```swag``` is a lightweight library to generate swagger json for Go projects.  
  
@@ -16,7 +16,7 @@ No code generation, no framework constraints, just a simple swagger definition.
 ## Installation
 
 ```bash
-go get github.com/frednomoon/swag
+go get github.com/music-tribe/swag
 ```
 
 
@@ -51,7 +51,7 @@ allPets := endpoint.New("get", "/pet", "Return all the pets",
 ) 
 ```
 
-Refer to the [godoc](https://godoc.org/github.com/frednomoon/swag/endpoint) for a list of all the endpoint options
+Refer to the [godoc](https://godoc.org/github.com/music-tribe/swag/endpoint) for a list of all the endpoint options
 
 ### Walk
 

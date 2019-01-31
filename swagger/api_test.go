@@ -23,7 +23,7 @@ import (
 
 	"path/filepath"
 
-	"github.com/frednomoon/swag/swagger"
+	"github.com/music-tribe/swag/swagger"
 	"github.com/stretchr/testify/assert"
 )
 
