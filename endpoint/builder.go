@@ -20,7 +20,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/savaki/swag/swagger"
+	"github.com/music-tribe/swag/swagger"
 )
 
 // Builder uses the builder pattern to generate swagger endpoint definitions
@@ -118,7 +118,7 @@ func Query(name, typ, description string, required bool) Option {
 func BodyType(t reflect.Type, description string, required bool) Option {
 	p := swagger.Parameter{
 		In:          "body",
-		Name:        "body",
+		Name:        "PAYLOAD",
 		Description: description,
 		Schema:      swagger.MakeSchema(t),
 		Required:    required,

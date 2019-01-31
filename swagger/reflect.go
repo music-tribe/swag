@@ -17,15 +17,52 @@ package swagger
 import (
 	"reflect"
 	"strings"
+	"time"
 )
 
-func inspect(t reflect.Type, jsonTag string) Property {
+func inspect(t reflect.Type, jsonTag, example, description string) Property {
 	p := Property{
 		GoType: t,
 	}
 
+	if example != "" {
+		p.Example = example
+	}
+
+	if description != "" {
+		p.Description = description
+	}
+
 	if strings.Contains(jsonTag, ",string") {
 		p.Type = "string"
+		return p
+	}
+
+	if t.String() == "uuid.UUID" {
+		p.GoType = reflect.TypeOf("string")
+		p.Type = "string"
+		p.Format = "uuid"
+		return p
+	}
+
+	if t.String() == "*bool" {
+		p.GoType = reflect.TypeOf("bool")
+		p.Type = "boolean"
+		return p
+	}
+
+	if t.String() == "time.Time" {
+		p.GoType = reflect.TypeOf("string")
+		p.Example = time.Now().UTC().Format(time.RFC3339)
+		p.Type = "string"
+		p.Format = "date"
+		return p
+	}
+
+	if t.String() == "json.RawMessage" {
+		p.GoType = reflect.TypeOf("struct")
+		p.Type = "object"
+		p.Format = "json"
 		return p
 	}
 
@@ -122,7 +159,7 @@ func defineObject(v interface{}) Object {
 	}
 
 	if t.Kind() != reflect.Struct {
-		p := inspect(t, "")
+		p := inspect(t, "", "", "")
 		return Object{
 			IsArray:  isArray,
 			GoType:   t,
@@ -160,14 +197,39 @@ func defineObject(v interface{}) Object {
 		}
 
 		// determine if this field is required or not
-		if v := field.Tag.Get("required"); v == "true" {
-			if required == nil {
-				required = []string{}
-			}
-			required = append(required, name)
-		}
+		// if v := field.Tag.Get("required"); v == "true" {
+		// 	if required == nil {
+		// 		required = []string{}
+		// 	}
+		// 	required = append(required, name)
+		// }
 
-		p := inspect(field.Type, field.Tag.Get("json"))
+		// get validation flags to use with description
+		v := field.Tag.Get("validate")
+		// split tags by comma
+		split := strings.Split(v, ",")
+		// loop each tag value
+		for i, k := range split {
+			// if tag == required
+			if k == "required" {
+				// set this item as required in swag
+				required = append(required, name)
+
+				// then delete required from description
+				split = append(split[:i], split[i+1:]...)
+
+				continue
+			}
+
+			// remove omitempty's
+			if k == "omitempty" {
+				split = append(split[:i], split[i+1:]...)
+			}
+		}
+		// join items from split back together to create a description string
+		description := strings.Join(split, ", ")
+
+		p := inspect(field.Type, field.Tag.Get("json"), field.Tag.Get("example"), description)
 		properties[name] = p
 	}
 
