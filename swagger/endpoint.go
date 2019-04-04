@@ -86,3 +86,17 @@ func (s *SecurityRequirement) MarshalJSON() ([]byte, error) {
 
 	return json.Marshal(s.Requirements)
 }
+
+func (s *SecurityRequirement) UnmarshalJSON(d []byte) error {
+	aux := make([]map[string][]string, 0)
+
+	if err := json.Unmarshal(d, &aux); err != nil {
+		return err
+	}
+
+	for _, v := range aux {
+		s.Requirements = append(s.Requirements, v)
+	}
+
+	return nil
+}
