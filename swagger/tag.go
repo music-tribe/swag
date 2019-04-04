@@ -23,6 +23,6 @@ type Docs struct {
 // Tag represents a swagger tag
 type Tag struct {
 	Name        string `json:"name"`
-	Description string `json:"description"`
-	Docs        Docs   `json:"externalDocs"`
+	Description string `json:"-"`
+	Docs        Docs   `json:"-"`
 }
